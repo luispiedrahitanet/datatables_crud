@@ -22,8 +22,8 @@
             </button>
             </div>
             <div class="modal-body">
-                <form>
-                    <input type="hidden" id="id">
+                <form id="form-editar">
+                    <input type="hidden" id="id"> <!-- Oculto -->
                     <div class="form-group">
                         <label for="">F. Nacimiento: </label>
                         <input type="text" id="f_nacimiento" class="form-control">
@@ -44,13 +44,14 @@
                         <label for="">F. Ingreso: </label>
                        <input type="text" id="f_ingreso" class="form-control">
                    </div>
+                
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Gardar</button>
+                    </div>
                 </form>
             </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary">Gardar</button>
-            </div>
-        </div>
         </div>
     </div>
     <!-- Fin Modal Editar -->
@@ -67,7 +68,7 @@
             </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="form-eliminar">
                     <input type="hidden" id="id_empleado">
                     <div class="form-group">
                         <label for="">F. Nacimiento: </label>
@@ -89,13 +90,13 @@
                         <label for="">F. Ingreso: </label>
                         <label id="empleado_ingreso"></label>
                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger">Eliminar</button>
+                    </div>
                 </form>
             </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-danger">Eliminar</button>
-            </div>
-        </div>
         </div>
     </div>
     <!-- Fin Modal Eliminar -->
@@ -169,7 +170,22 @@
             $("#apellido").val(data.last_name);
             $("#genero").val(data.gender);
             $("#f_ingreso").val(data.hire_date);
-            console.log(data);
+            //console.log(data);
+        });
+
+        $("#form-editar").submit(e=>{
+            let emp_no = $("#id").val();
+            let birth_date = $("#f_nacimiento").val();
+            let first_name = $("#nombre").val();
+            let last_name = $("#apellido").val();
+            let gender = $("#genero").val();
+            let hire_date = $("#f_ingreso").val();
+            
+            funcion = "editar";
+            $.post("controlador/EmpleadoController.php",{emp_no,birth_date,first_name,last_name,gender,hire_date,funcion},(response) => {
+                consele.log(response);
+            });
+            //e.preventDefault();     // Acordémonos de esto
         });
 
     } );

@@ -30,4 +30,18 @@ if( $_POST['funcion'] == 'listar' ){
 }
 
 
+if( $_POST['funcion'] == 'editar' ){
+    // recibimos los datos enviados por el metodo Post de ajax
+    $emp_no = $_POST['emp_no'];
+    $birth_date = $_POST['birth_date'];
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $gender = $_POST['gender'];
+    $hire_date = $_POST['hire_date'];
+
+    // llamamos al metodo editar del modelo Empleado
+    $empleado->editar($emp_no,$birth_date,$first_name,$last_name,$gender,$hire_date);
+}
+
+
 

@@ -19,4 +19,12 @@ class Empleado{
         
         return $this->empleados;                                    // retornamos la variable global
     }
+
+    function editar($emp_no,$birth_date,$first_name,$last_name,$gender,$hire_date){
+        $sql = "UPDATE employees SET birth_date='$birth_date', first_name='$first_name', last_name='$last_name', gender='$gender', hire_date='$hire_date' WHERE emp_no='$emp_no'";
+        $resultado = $this->acceso->query($sql);
+    }
+
+
+
 } 
