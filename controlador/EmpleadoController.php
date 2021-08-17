@@ -53,4 +53,18 @@ if( $_POST['funcion'] == 'eliminar' ){
 }
 
 
+if( $_POST['funcion'] == 'nuevo' ){
+    // recibimos el id enviados por el metodo Post de ajax
+    $birth_date = $_POST['birth_date'];
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $gender = $_POST['gender'];
+    $hire_date = $_POST['hire_date'];
+
+    // llamamos al metodo nuevo del modelo Empleado
+    $empleado->nuevo($birth_date,$first_name,$last_name,$gender,$hire_date);
+}
+
+
+
 

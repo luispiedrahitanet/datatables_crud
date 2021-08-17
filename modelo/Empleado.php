@@ -33,4 +33,10 @@ class Empleado{
         $resultado = $this->acceso->query($sql);
     }
 
+
+    function nuevo($birth_date,$first_name,$last_name,$gender,$hire_date){
+        $sql = "INSERT INTO employees (birth_date,first_name,last_name,gender,hire_date) VALUES ('$birth_date','$first_name','$last_name','$gender','$hire_date')";
+        $resultado = $this->acceso->query($sql);
+    }
+
 } 

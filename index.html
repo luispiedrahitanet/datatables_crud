@@ -26,23 +26,23 @@
                     <form id="form-nuevo">
                         <div class="form-group">
                             <label for="">F. Nacimiento: </label>
-                            <input type="text" id="nuevo_nacimiento" class="form-control">
+                            <input type="text" id="nuevo_nacimiento" class="form-control" required>
                         </div>
                         <div class="form-group">
                              <label for="">Nombre: </label>
-                            <input type="text" id="nuevo_nombre" class="form-control">
+                            <input type="text" id="nuevo_nombre" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="">Apellido: </label>
-                           <input type="text" id="nuevo_apellido" class="form-control">
+                           <input type="text" id="nuevo_apellido" class="form-control" required>
                        </div>
                        <div class="form-group">
                              <label for="">Género: </label>
-                            <input type="text" id="nuevo_genero" class="form-control">
+                            <input type="text" id="nuevo_genero" class="form-control" placeholder="(M)masculino ó (F)femenino" required>
                         </div>
                         <div class="form-group">
                             <label for="">F. Ingreso: </label>
-                           <input type="text" id="nuevo_ingreso" class="form-control">
+                           <input type="text" id="nuevo_ingreso" class="form-control"required>
                        </div>
                     
                         </div>
@@ -274,31 +274,57 @@
             
         });
 
+        // ------------------ NUEVO --------------------------
+        $("#form_nuevo").submit(e=>{
+            let birth_date = $("#nuevo_nacimiento").val();
+            let first_name = $("#nuevo_nombre").val();
+            let last_name = $("#nuevo_apellido").val();
+            let gender = $("#nuevo_genero").val();
+            let hire_date = $("#nuevo_ingreso").val();
+
+            funcion = "nuevo";
+            $.post("controlador/EmpleadoController.php",{birth_date,first_name,last_name,gender,hire_date,funcion},(response)=>{
+
+            });
+        });
+
         //------------- FECHAS EDITAR --------------
         $('#f_nacimiento').datepicker({
             format: 'yyyy-mm-dd',
             locale: 'es-es',
             uiLibrary: 'bootstrap4',
-            modal: true
+            modal: true,
+            weekStartDay: 1
         });
         $('#f_ingreso').datepicker({
             format: "yyyy-mm-dd",
             locale: 'es-es',
             uiLibrary: 'bootstrap4',
-            modal: true
+            modal: true,
+            weekStartDay: 1
         });
+
         //------------- FECHAS NUEVOS --------------
+        let hoy = new Date();
+        let anio  = hoy.getFullYear();
+        let mes = hoy.getMonth() + 1;
+        let dia   = hoy.getDate(); 
+        let fecha = anio +"-"+ mes +"-"+ dia;
         $('#nuevo_nacimiento').datepicker({
             format: "yyyy-mm-dd",
             locale: 'es-es',
             uiLibrary: 'bootstrap4',
-            modal: true
+            modal: true,
+            weekStartDay: 1,
+            value: fecha
         });
         $('#nuevo_ingreso').datepicker({
             format: "yyyy-mm-dd",
             locale: 'es-es',
             uiLibrary: 'bootstrap4',
-            modal: true
+            modal: true,
+            weekStartDay: 1,
+            value: fecha
         });
 
     } );
