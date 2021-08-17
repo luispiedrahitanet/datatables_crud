@@ -44,4 +44,13 @@ if( $_POST['funcion'] == 'editar' ){
 }
 
 
+if( $_POST['funcion'] == 'eliminar' ){
+    // recibimos el id enviados por el metodo Post de ajax
+    $emp_no = $_POST['emp_no'];
+
+    // llamamos al metodo editar del modelo Empleado
+    $empleado->eliminar($emp_no);
+}
+
+
 

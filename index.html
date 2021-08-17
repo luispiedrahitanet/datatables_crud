@@ -8,6 +8,7 @@
        <link rel="stylesheet" href="lib/bootstrap.min.css">
        <link rel="stylesheet" href="lib/datatables.min.css">
        <link rel="stylesheet" href="lib/fontawesome/all.min.css">
+       <link rel="stylesheet" href="lib/gijgo/gijgo.min.css">
 </head>
 <body>
 
@@ -69,31 +70,31 @@
             </div>
             <div class="modal-body">
                 <form id="form-eliminar">
-                    <input type="hidden" id="id_empleado">
+                    <input type="hidden" id="id_elim">
                     <div class="form-group">
-                        <label for="">F. Nacimiento: </label>
-                        <label id="empleado_nacimiento"></label>
+                        <label for=""><strong>F. Nacimiento: </strong></label>
+                        <label id="elim_nacimiento"></label>
                     </div>
                     <div class="form-group">
-                        <label for="">Nombre: </label>
-                        <label id="empleado_nombres"></label>
+                        <label for=""><strong>Nombre: </strong></label>
+                        <label id="elim_nombre"></label>
                     </div>
                     <div class="form-group">
-                        <label for="">Apellido: </label>
-                        <label id="empleado_apellidos"></label>
+                        <label for=""><strong>Apellido: </strong></label>
+                        <label id="elim_apellido"></label>
                    </div>
                    <div class="form-group">
-                         <label for="">Género: </label>
-                         <label id="empleado_genero"></label>
+                         <label for=""><strong>Género: </strong></label>
+                         <label id="elim_genero"></label>
                     </div>
                     <div class="form-group">
-                        <label for="">F. Ingreso: </label>
-                        <label id="empleado_ingreso"></label>
+                        <label for=""><strong>F. Ingreso: </strong></label>
+                        <label id="elim_ingreso"></label>
                    </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger">Eliminar</button>
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
                     </div>
                 </form>
             </div>
@@ -130,12 +131,17 @@
         </table>
     </div>
 
+        
+
+
     </div>
 
 <script src="lib/jquery.min.js"></script>  
 <script src="lib/bootstrap.min.js"></script>     
 <script src="lib/datatables.min.js"></script>
 <script src="lib/fontawesome/all.min.js"></script>
+<script src="lib/gijgo/gijgo.min.js"></script>
+<script src="lib/gijgo/messages.es-es.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -162,6 +168,7 @@
             }
         });
 
+        // ------------------ EDITAR --------------------------
         $("#miTabla tbody").on("click",".editar", function(){
             let data = datatable.row($(this).parents()).data();
             $("#id").val(data.emp_no);   // campo oculto
@@ -183,9 +190,52 @@
             
             funcion = "editar";
             $.post("controlador/EmpleadoController.php",{emp_no,birth_date,first_name,last_name,gender,hire_date,funcion},(response) => {
-                consele.log(response);
+
             });
-            //e.preventDefault();     // Acordémonos de esto
+        });
+
+        // ------------------ ELIMINAR --------------------------
+        $("#miTabla tbody").on("click",".eliminar", function(){
+            let data = datatable.row($(this).parents()).data();
+            $("#id_elim").val(data.emp_no);   // campo oculto
+            $("#elim_nacimiento").html(data.birth_date);
+            $("#elim_nombre").html(data.first_name);
+            $("#elim_apellido").html(data.last_name);
+            $("#elim_genero").html(data.gender);
+            $("#elim_ingreso").html(data.hire_date);
+            //console.log(data);
+        });
+
+        $("#form-eliminar").submit(e=>{
+            
+            let confirmado;
+            confirmado = confirm("\nESTÁ A PUNTO DE ELIMININAR ESTE REGISTRO . . . PROCEDO?\n");
+
+            if( confirmado == false ){
+                e.preventDefault();
+                return;
+            }
+
+            let emp_no = $("#id_elim").val();
+            
+            funcion = "eliminar";
+            $.post("controlador/EmpleadoController.php",{emp_no,funcion},(response) => {
+                // console.log(response);
+            });
+            
+        });
+
+        $('#f_nacimiento').datepicker({
+            format: 'yyyy-mm-dd',
+            locale: 'es-es',
+            uiLibrary: 'bootstrap4',
+            modal: true
+        });
+        $('#f_ingreso').datepicker({
+            format: "yyyy-mm-dd",
+            locale: 'es-es',
+            uiLibrary: 'bootstrap4',
+            modal: true
         });
 
     } );
