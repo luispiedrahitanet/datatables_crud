@@ -12,6 +12,51 @@
 </head>
 <body>
 
+        <!-- Modal Nuevo -->
+        <div class="modal fade" id="nuevo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-light">
+                <h5 class="modal-title" id="exampleModalLabel">Ingresar Empleado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-nuevo">
+                        <div class="form-group">
+                            <label for="">F. Nacimiento: </label>
+                            <input type="text" id="nuevo_nacimiento" class="form-control">
+                        </div>
+                        <div class="form-group">
+                             <label for="">Nombre: </label>
+                            <input type="text" id="nuevo_nombre" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Apellido: </label>
+                           <input type="text" id="nuevo_apellido" class="form-control">
+                       </div>
+                       <div class="form-group">
+                             <label for="">Género: </label>
+                            <input type="text" id="nuevo_genero" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">F. Ingreso: </label>
+                           <input type="text" id="nuevo_ingreso" class="form-control">
+                       </div>
+                    
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Gardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Fin Modal Nuevo -->
+    
+
     <!-- Modal Editar -->
     <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -111,6 +156,10 @@
             <hr class="">
             <p>Creado por Luis Piedrahita - <a href="https://github.com/luispiedrahitanet" class="alert-link">https://github.com/luispiedrahitanet</a> </p>
         </div>
+
+        <div class="alert alert-success text-center" role="alert">
+            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#nuevo">Nuevo empleado</button>
+          </div>
 
     <div class="table-responsive">
         <table id="miTabla" class="w-100 display table table-hover table-bordered text-nowrap shadow-sm rounded">
@@ -225,6 +274,7 @@
             
         });
 
+        //------------- FECHAS EDITAR --------------
         $('#f_nacimiento').datepicker({
             format: 'yyyy-mm-dd',
             locale: 'es-es',
@@ -232,6 +282,19 @@
             modal: true
         });
         $('#f_ingreso').datepicker({
+            format: "yyyy-mm-dd",
+            locale: 'es-es',
+            uiLibrary: 'bootstrap4',
+            modal: true
+        });
+        //------------- FECHAS NUEVOS --------------
+        $('#nuevo_nacimiento').datepicker({
+            format: "yyyy-mm-dd",
+            locale: 'es-es',
+            uiLibrary: 'bootstrap4',
+            modal: true
+        });
+        $('#nuevo_ingreso').datepicker({
             format: "yyyy-mm-dd",
             locale: 'es-es',
             uiLibrary: 'bootstrap4',
