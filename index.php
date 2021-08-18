@@ -38,7 +38,10 @@
                        </div>
                        <div class="form-group">
                              <label for="">Género: </label>
-                            <input type="text" id="nuevo_genero" class="form-control" placeholder="(M)masculino ó (F)femenino" required>
+                             <select id="nuevo_genero" class="form-control">
+                                 <option value="M">M</option>
+                                 <option value="F">F</option>
+                             </select>
                         </div>
                         <div class="form-group">
                             <label for="">F. Ingreso: </label>
@@ -83,8 +86,11 @@
                        <input type="text" id="apellido" class="form-control">
                    </div>
                    <div class="form-group">
-                         <label for="">Género: </label>
-                        <input type="text" id="genero" class="form-control">
+                        <label for="">Género: </label>
+                        <select id="genero" class="form-control">
+                                <option value="M">M</option>
+                                <option value="F">F</option>
+                            </select>
                     </div>
                     <div class="form-group">
                         <label for="">F. Ingreso: </label>
@@ -158,7 +164,7 @@
         </div>
 
         <div class="alert alert-success text-center" role="alert">
-            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#nuevo">Nuevo empleado</button>
+            <button type="button" class="btn btn-success btn-sm  shadow" data-toggle="modal" data-target="#nuevo">Nuevo empleado</button>
           </div>
 
     <div class="table-responsive">
@@ -195,6 +201,16 @@
     $(document).ready(function() {
 
         var funcion = "listar";
+
+        function compararFechas(fechaIni,fechaPos){
+            let f_nac = new Date(fechaIni);
+            let f_ing = new Date(fechaPos);
+            let valor = false;
+            if (f_nac > f_ing) {
+                valor = true;
+            }
+            return valor;
+        }
         
         let datatable = $('#miTabla').DataTable({
             "ajax": {
@@ -236,6 +252,13 @@
             let last_name = $("#apellido").val();
             let gender = $("#genero").val();
             let hire_date = $("#f_ingreso").val();
+
+            let comp = compararFechas(birth_date,hire_date);
+            if(comp){
+                alert("LA FECHA DE NACIMIENTO NO PUEDE SER MAYOR A LA DE INGRESO");
+                e.preventDefault();
+                return;
+            }
             
             funcion = "editar";
             $.post("controlador/EmpleadoController.php",{emp_no,birth_date,first_name,last_name,gender,hire_date,funcion},(response) => {
@@ -275,12 +298,19 @@
         });
 
         // ------------------ NUEVO --------------------------
-        $("#form_nuevo").submit(e=>{
+        $("#form-nuevo").submit(e=>{
             let birth_date = $("#nuevo_nacimiento").val();
             let first_name = $("#nuevo_nombre").val();
             let last_name = $("#nuevo_apellido").val();
             let gender = $("#nuevo_genero").val();
             let hire_date = $("#nuevo_ingreso").val();
+            
+            let comp = compararFechas(birth_date,hire_date);
+            if(comp){
+                alert("LA FECHA DE NACIMIENTO NO PUEDE SER MAYOR A LA DE INGRESO");
+                e.preventDefault();
+                return;
+            }
 
             funcion = "nuevo";
             $.post("controlador/EmpleadoController.php",{birth_date,first_name,last_name,gender,hire_date,funcion},(response)=>{
@@ -288,6 +318,8 @@
             });
         });
 
+
+        
         //------------- FECHAS EDITAR --------------
         $('#f_nacimiento').datepicker({
             format: 'yyyy-mm-dd',

@@ -14,7 +14,7 @@ class Empleado{
 
 
     function mostrar(){
-        $sql = "SELECT * FROM employees limit 10000";                // creamos la cadena sql
+        $sql = "SELECT * FROM employees";                           // creamos la cadena sql
         $resultado = $this->acceso->query($sql);                    // ejecutamos la consulta sql y lo asignamos a una variable
         $this->empleados = $resultado->fetch_all(MYSQLI_ASSOC);     // asignamos a la variable global el objeto con el resultado de la consulta
         
